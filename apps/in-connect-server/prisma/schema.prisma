@@ -1,0 +1,72 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  files       Json?
+  title       String?
+  owner       String?
+}
+
+model InterestCluster {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String?
+  description String?
+}
+
+model PartnerMatch {
+  id                 String   @id @default(cuid())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  compatibilityScore Float?
+  user1              String?
+  user2              String?
+}
+
+model MusicShare {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String?
+  artist    String?
+  file      Json?
+  sharedBy  String?
+}
+
+model IdeologyCluster {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String?
+  description String?
+}
+
+model User {
+  id             String              @id @default(cuid())
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  firstName      String?
+  lastName       String?
+  username       String              @unique
+  email          String?             @unique
+  password       String
+  roles          Json
+  bio            String?
+  interests      EnumUserInterests[]
+  profilePicture Json?
+}
+
+enum EnumUserInterests {
+  Option1
+}
